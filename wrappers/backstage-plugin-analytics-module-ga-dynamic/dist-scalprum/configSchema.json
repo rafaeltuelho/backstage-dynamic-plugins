@@ -1,0 +1,146 @@
+{
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "required": [
+    "app"
+  ],
+  "properties": {
+    "testPlugin": {
+      "type": "object",
+      "required": [
+        "foo"
+      ],
+      "properties": {
+        "foo": {
+          "visibility": "frontend",
+          "type": "string"
+        }
+      }
+    },
+    "app": {
+      "type": "object",
+      "properties": {
+        "analytics": {
+          "type": "object",
+          "required": [
+            "ga"
+          ],
+          "properties": {
+            "ga": {
+              "type": "object",
+              "required": [
+                "trackingId"
+              ],
+              "properties": {
+                "trackingId": {
+                  "description": "Google Analytics tracking ID, e.g. UA-000000-0",
+                  "visibility": "frontend",
+                  "type": "string"
+                },
+                "scriptSrc": {
+                  "description": "URL to Google Analytics analytics.js script\nDefaults to fetching from GA source (eg. https://www.google-analytics.com/analytics.js)",
+                  "visibility": "frontend",
+                  "type": "string"
+                },
+                "identity": {
+                  "description": "Controls how the identityApi is used when sending data to GA:\n\n- `disabled`: (Default) Explicitly prevents a user's identity from\n  being used when capturing events in GA.\n- `optional`: Pageviews and hits are forwarded to GA as they happen\n  and only include user identity metadata once known. Guarantees\n  that hits are captured for all sessions, even if no sign in\n  occurs, but may result in dropped hits in User ID views.\n- `required`: All pageviews and hits are deferred until an identity\n  is known. Guarantees that all data sent to GA correlates to a user\n  identity, but prevents GA from receiving events for sessions in\n  which a user does not sign in. An `identityApi` instance must be\n  passed during instantiation when set to this value.",
+                  "visibility": "frontend",
+                  "enum": [
+                    "disabled",
+                    "optional",
+                    "required"
+                  ],
+                  "type": "string"
+                },
+                "virtualSearchPageView": {
+                  "description": "Controls whether to send virtual pageviews on `search` events.\nCan be used to enable Site Search in GA.",
+                  "type": "object",
+                  "properties": {
+                    "mode": {
+                      "description": "- `disabled`: (Default) no virtual pageviews are sent\n- `only`: Sends virtual pageview _instead_ of the `search` event\n- `both`: Sends both the `search` event _and_ the virtual pageview",
+                      "visibility": "frontend",
+                      "enum": [
+                        "both",
+                        "disabled",
+                        "only"
+                      ],
+                      "type": "string"
+                    },
+                    "mountPath": {
+                      "description": "Specifies on which path the main Search page is mounted.\nDefaults to `/search`.",
+                      "visibility": "frontend",
+                      "type": "string"
+                    },
+                    "searchQuery": {
+                      "description": "Specifies which query param is used for the term query in the virtual pageview URL.\nDefaults to `query`.",
+                      "visibility": "frontend",
+                      "type": "string"
+                    },
+                    "categoryQuery": {
+                      "description": "Specifies which query param is used for the category query in the virtual pageview URL.\nSkipped by default.",
+                      "visibility": "frontend",
+                      "type": "string"
+                    }
+                  }
+                },
+                "debug": {
+                  "description": "Whether or not to log analytics debug statements to the console.\nDefaults to false.",
+                  "visibility": "frontend",
+                  "type": "boolean"
+                },
+                "testMode": {
+                  "description": "Prevents events from actually being sent when set to true. Defaults\nto false.",
+                  "visibility": "frontend",
+                  "type": "boolean"
+                },
+                "customDimensionsMetrics": {
+                  "description": "Configuration informing how Analytics Context and Event Attributes\nmetadata will be captured in Google Analytics.",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "index",
+                      "key",
+                      "source",
+                      "type"
+                    ],
+                    "properties": {
+                      "type": {
+                        "description": "Specifies whether the corresponding metadata should be collected\nas a Google Analytics custom dimension or custom metric.",
+                        "visibility": "frontend",
+                        "enum": [
+                          "dimension",
+                          "metric"
+                        ],
+                        "type": "string"
+                      },
+                      "index": {
+                        "description": "The index of the Google Analytics custom dimension or metric that\nthe metadata should be written to.",
+                        "visibility": "frontend",
+                        "type": "number"
+                      },
+                      "source": {
+                        "description": "Specifies whether the desired value lives as an attribute on the\nAnalytics Context or the Event's Attributes.",
+                        "visibility": "frontend",
+                        "enum": [
+                          "attributes",
+                          "context"
+                        ],
+                        "type": "string"
+                      },
+                      "key": {
+                        "description": "The property of the context or attributes that should be captured.\ne.g. to capture the Plugin ID associated with an event, the source\nshould be set to \"context\" and the key should be set to pluginId.",
+                        "visibility": "frontend",
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
