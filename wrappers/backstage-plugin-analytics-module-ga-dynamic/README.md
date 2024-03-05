@@ -33,3 +33,19 @@ Skipping directory entry package/dist-scalprum/static
 ==> Removing package archive /dynamic-plugins-root/rafaeltuelho-backstage-plugin-analytics-module-ga-dynamic-0.1.0.tgz
 ==> Successfully installed dynamic plugin @rafaeltuelho/backstage-plugin-analytics-module-ga-dynamic
 ```
+
+## Minimal config
+
+To configure the plugin to start sending data to GA add the following snippet in your RHDH `app-config` Config Map
+
+```
+app:
+  analytics:
+    ga:
+      debug: true
+      trackingId: 'UA-99999999-9'
+```
+
+For additional config consult the [upstream plugin readme file](backstage [analytics-module-ga](https://github.com/backstage/backstage/tree/master/plugins/analytics-module-ga)
+
+> NOTE: the backstage upstream plugin uses an old implementation of the Google Analytics JS library whci does not work with the new GA4 [`gtag.js`](https://support.google.com/analytics/answer/10220869?hl=en)

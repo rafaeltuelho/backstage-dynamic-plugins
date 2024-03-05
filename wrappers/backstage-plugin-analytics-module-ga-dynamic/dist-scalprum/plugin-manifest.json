@@ -1,11 +1,11 @@
 {
   "name": "rafaeltuelho.backstage-plugin-analytics-module-ga-dynamic",
-  "version": "0.1.0",
+  "version": "0.1.6",
   "extensions": [],
   "registrationMethod": "callback",
   "baseURL": "auto",
   "loadScripts": [
-    "rafaeltuelho.backstage-plugin-analytics-module-ga-dynamic.bf089ee4ea1672458ae4.js"
+    "rafaeltuelho.backstage-plugin-analytics-module-ga-dynamic.6cafd8ad71c238d0a836.js"
   ],
-  "buildHash": "bf089ee4ea1672458ae4ee8ab83fe320"
+  "buildHash": "6cafd8ad71c238d0a836cef4c4daa7d1"
 }
