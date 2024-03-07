@@ -10,10 +10,21 @@ Add the following entry under the `global.plugins` inside the RHDH Helm Chart va
 
 ```yaml
 #...
-    - disabled: false
-      package: '@rafaeltuelho/backstage-plugin-analytics-module-ga-dynamic'
-      integrity: >-
-          sha512-m3JwgnM++iSizKcA0GLHB1F52PU89kIeM4+AQLXUUd0zQ8tv1ER5y9nlgEqdizKa+5Q7drOFtj4fP4goN6Hz5Q==
+		- package: '@rafaeltuelho/backstage-plugin-analytics-module-ga-dynamic@0.1.6' #GA4
+		  integrity: >-
+		      sha512-S8h0s3Q2sZ99a2PmitJgp8DDKIMo5YvBYz61ULOFgjredJB3+s+irwjRoiqmi+yTYfeiIHggcZwFE2Uhbola8Q==
+		  disabled: false
+	      pluginConfig:
+	        dynamicPlugins:
+	          frontend:
+	            rafaeltuelho.backstage-plugin-analytics-module-ga-dynamic:
+	              apiFactories:
+	                - importName: GoogleAnalyticsApi
+          app:
+            analytics:
+              ga4:
+                debug: true
+                measurementId: G-999AAA99AA
 #...
 ```
 
@@ -41,11 +52,9 @@ To configure the plugin to start sending data to GA add the following snippet in
 ```
 app:
   analytics:
-    ga:
+    ga4:
       debug: true
-      trackingId: 'UA-99999999-9'
+      measurementId: G-999AAA99AA
 ```
 
-For additional config consult the [upstream plugin readme file](backstage [analytics-module-ga](https://github.com/backstage/backstage/tree/master/plugins/analytics-module-ga)
-
-> NOTE: the backstage upstream plugin uses an old implementation of the Google Analytics JS library whci does not work with the new GA4 [`gtag.js`](https://support.google.com/analytics/answer/10220869?hl=en)
+For additional config consult the [upstream plugin readme file](backstage [analytics-module-ga](https://github.com/backstage/backstage/tree/master/plugins/analytics-module-ga4)
