@@ -5,7 +5,7 @@
   "registrationMethod": "callback",
   "baseURL": "auto",
   "loadScripts": [
-    "rafaeltuelho.backstage-plugin-analytics-module-ga-dynamic.6cafd8ad71c238d0a836.js"
+    "rafaeltuelho.backstage-plugin-analytics-module-ga-dynamic.c9f321a84b96206fd985.js"
   ],
-  "buildHash": "6cafd8ad71c238d0a836cef4c4daa7d1"
+  "buildHash": "c9f321a84b96206fd985a41753b9ed49"
 }

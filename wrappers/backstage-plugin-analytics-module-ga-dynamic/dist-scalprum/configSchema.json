@@ -11,22 +11,17 @@
         "analytics": {
           "type": "object",
           "required": [
-            "ga"
+            "ga4"
           ],
           "properties": {
-            "ga": {
+            "ga4": {
               "type": "object",
               "required": [
-                "trackingId"
+                "measurementId"
               ],
               "properties": {
-                "trackingId": {
-                  "description": "Google Analytics tracking ID, e.g. UA-000000-0",
-                  "visibility": "frontend",
-                  "type": "string"
-                },
-                "scriptSrc": {
-                  "description": "URL to Google Analytics analytics.js script\nDefaults to fetching from GA source (eg. https://www.google-analytics.com/analytics.js)",
+                "measurementId": {
+                  "description": "Google Analytics measurement ID, e.g. G-000000-0",
                   "visibility": "frontend",
                   "type": "string"
                 },
@@ -40,39 +35,13 @@
                   ],
                   "type": "string"
                 },
-                "virtualSearchPageView": {
-                  "description": "Controls whether to send virtual pageviews on `search` events.\nCan be used to enable Site Search in GA.",
-                  "type": "object",
-                  "properties": {
-                    "mode": {
-                      "description": "- `disabled`: (Default) no virtual pageviews are sent\n- `only`: Sends virtual pageview _instead_ of the `search` event\n- `both`: Sends both the `search` event _and_ the virtual pageview",
-                      "visibility": "frontend",
-                      "enum": [
-                        "both",
-                        "disabled",
-                        "only"
-                      ],
-                      "type": "string"
-                    },
-                    "mountPath": {
-                      "description": "Specifies on which path the main Search page is mounted.\nDefaults to `/search`.",
-                      "visibility": "frontend",
-                      "type": "string"
-                    },
-                    "searchQuery": {
-                      "description": "Specifies which query param is used for the term query in the virtual pageview URL.\nDefaults to `query`.",
-                      "visibility": "frontend",
-                      "type": "string"
-                    },
-                    "categoryQuery": {
-                      "description": "Specifies which query param is used for the category query in the virtual pageview URL.\nSkipped by default.",
-                      "visibility": "frontend",
-                      "type": "string"
-                    }
-                  }
-                },
                 "debug": {
-                  "description": "Whether or not to log analytics debug statements to the console.\nDefaults to false.",
+                  "description": "Whether to log analytics debug statements to the console.\nDefaults to false.",
+                  "visibility": "frontend",
+                  "type": "boolean"
+                },
+                "enableSendPageView": {
+                  "description": "Whether to send default send_page_view event.\nDefaults to false.",
                   "visibility": "frontend",
                   "type": "boolean"
                 },
@@ -81,48 +50,61 @@
                   "visibility": "frontend",
                   "type": "boolean"
                 },
-                "customDimensionsMetrics": {
-                  "description": "Configuration informing how Analytics Context and Event Attributes\nmetadata will be captured in Google Analytics.",
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "required": [
-                      "index",
-                      "key",
-                      "source",
-                      "type"
-                    ],
-                    "properties": {
-                      "type": {
-                        "description": "Specifies whether the corresponding metadata should be collected\nas a Google Analytics custom dimension or custom metric.",
-                        "visibility": "frontend",
-                        "enum": [
-                          "dimension",
-                          "metric"
-                        ],
-                        "type": "string"
-                      },
-                      "index": {
-                        "description": "The index of the Google Analytics custom dimension or metric that\nthe metadata should be written to.",
-                        "visibility": "frontend",
-                        "type": "number"
-                      },
-                      "source": {
-                        "description": "Specifies whether the desired value lives as an attribute on the\nAnalytics Context or the Event's Attributes.",
-                        "visibility": "frontend",
-                        "enum": [
-                          "attributes",
-                          "context"
-                        ],
-                        "type": "string"
-                      },
-                      "key": {
-                        "description": "The property of the context or attributes that should be captured.\ne.g. to capture the Plugin ID associated with an event, the source\nshould be set to \"context\" and the key should be set to pluginId.",
-                        "visibility": "frontend",
+                "contentGrouping": {
+                  "description": "Content grouping definition\nFeature available in Google Analytics 4\nMore information https://support.google.com/analytics/answer/11523339?hl=en\nData can be grouped by pluginId, routeRef\nTakes 24 hours before metrics shows up in GA dashboard\nSpecifies the dimension to be used for content grouping\nCan be one of pluginId, extension or routeRef",
+                  "visibility": "frontend",
+                  "enum": [
+                    "extension",
+                    "pluginId",
+                    "routeRef"
+                  ],
+                  "type": "string"
+                },
+                "allowedContexts": {
+                  "description": "Configuration informing how Analytics Context and Event Attributes\nmetadata will be captured in Google Analytics.\nContexts that will be sent as parameters in the event.\ncontext-name will be prefixed by c_, for example, pluginId will be c_pluginId in the event.",
+                  "visibility": "frontend",
+                  "anyOf": [
+                    {
+                      "type": "array",
+                      "items": {
                         "type": "string"
                       }
+                    },
+                    {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "string",
+                          "const": "*"
+                        }
+                      ],
+                      "minItems": 1,
+                      "maxItems": 1
                     }
-                  }
+                  ]
+                },
+                "allowedAttributes": {
+                  "description": "Attributes that will be sent as parameters in the event\nattribute-name will be prefixed by a_, for example , testAttribute will be c_testAttribute in the event.",
+                  "visibility": "frontend",
+                  "anyOf": [
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "string",
+                          "const": "*"
+                        }
+                      ],
+                      "minItems": 1,
+                      "maxItems": 1
+                    }
+                  ]
                 }
               }
             }
